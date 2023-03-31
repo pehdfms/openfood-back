@@ -113,7 +113,7 @@ describe('Product Module (e2e)', () => {
       repositoryMock.findOne.mockReturnValue(expectedProduct)
       repositoryMock.persistAndFlush.mockReturnValue(expectedProduct)
 
-      product = (await agent.put(`/products/1`).expect(HttpStatus.OK)).body
+      product = (await agent.put(`/products/${expectedProduct.code}`).expect(HttpStatus.OK)).body
       expect(repositoryMock.findOne).toHaveBeenCalledWith({ code: expectedProduct.code })
     })
 
