@@ -35,20 +35,26 @@ describe('App Module (e2e)', () => {
       health = (await agent.get('').expect(HttpStatus.OK)).body
     })
 
-    describe('Structure', () => {
-      it('should contain DB Health', async () => {
+    describe('DB Health', () => {
+      it('should be visible', async () => {
         expect(health).toHaveProperty('dbStatus')
       })
+    })
 
-      it('should contain last CRON date', async () => {
+    describe('Last CRON Run', () => {
+      it('should be visible', async () => {
         expect(health).toHaveProperty('lastCronRun')
       })
+    })
 
-      it('should contain uptime', async () => {
+    describe('Uptime', () => {
+      it('should be visible', async () => {
         expect(health).toHaveProperty('uptime')
       })
+    })
 
-      it('should contain memory usage', async () => {
+    describe('Memory Usage', () => {
+      it('should be visible', async () => {
         expect(health).toHaveProperty('memoryUsage')
       })
     })
