@@ -1,4 +1,14 @@
-import { Controller, Get, Body, Param, Delete, Query, Put } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Put,
+  HttpStatus,
+  HttpCode
+} from '@nestjs/common'
 import { ProductService } from './product.service'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
@@ -27,7 +37,8 @@ export class ProductController {
   }
 
   @Delete(':code')
-  remove(@Param('code') code: string) {
-    return this.productService.remove(+code)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('code') code: string): Promise<void> {
+    await this.productService.remove(code)
   }
 }

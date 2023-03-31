@@ -39,7 +39,8 @@ export class ProductService {
     return existingProduct
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`
+  async remove(code: string): Promise<void> {
+    const board = await this.findOne(code)
+    await this.productRepository.removeAndFlush(board)
   }
 }
