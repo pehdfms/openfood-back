@@ -77,6 +77,16 @@ describe('Product Module (e2e)', () => {
         expect(page.totalPages).toBeGreaterThanOrEqual(page.current)
       })
     })
+
+    describe('Data', () => {
+      it('should match expected data', () => {
+        if (expectedProducts.length > perPage) {
+          expect(products.data).toMatchObject(expectedProducts.slice(0, perPage))
+        } else {
+          expect(products.data).toMatchObject(expectedProducts)
+        }
+      })
+    })
   })
 
   describe('GET /products/:code', () => {})

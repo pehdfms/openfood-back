@@ -9,11 +9,11 @@ export const repositoryMockFactory: () => MockType<EntityRepository<Product>> = 
   findAndCount: jest.fn((entities: Product[]) => [entities, entities.length])
 }))
 
-export const mockProducts: Product[] = [
+export const mockProducts = [
   {
     code: '20221126',
     status: ProductStatus.Published,
-    imported_t: new Date(),
+    imported_t: `${new Date()}`,
     url: 'https://world.openfoodfacts.org/product/20221126',
     creator: 'securita',
     created_t: 1415302075,
