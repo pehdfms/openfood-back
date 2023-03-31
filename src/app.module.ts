@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config'
 import { LoggerModule } from 'nestjs-pino'
 import Joi from 'joi'
 import { ScheduleModule } from '@nestjs/schedule'
-import { AppController } from '@app.controller'
-import { AppService } from '@app.service'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
 
 @Module({
   controllers: [AppController],
