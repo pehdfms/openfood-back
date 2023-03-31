@@ -32,7 +32,6 @@ async function bootstrap() {
   app.enableCors()
 
   app.useGlobalFilters(new QueryErrorFilter(httpAdapter))
-  app.setGlobalPrefix('api')
 
   setupSwagger(app)
 
