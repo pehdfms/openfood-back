@@ -40,6 +40,10 @@ describe('App Module (e2e)', () => {
       it('should be visible', () => {
         expect(health).toHaveProperty('dbStatus')
       })
+
+      it('should be ok', () => {
+        expect(health.dbStatus).toBe('ok')
+      })
     })
 
     describe('Last CRON Run', () => {
@@ -52,11 +56,23 @@ describe('App Module (e2e)', () => {
       it('should be visible', () => {
         expect(health).toHaveProperty('uptime')
       })
+
+      it('should be non zero', () => {
+        expect(health.uptime).toBeGreaterThan(0)
+      })
     })
 
     describe('Memory Usage', () => {
       it('should be visible', () => {
         expect(health).toHaveProperty('memoryUsage')
+      })
+
+      it('should be non empty', () => {
+        expect(health.memoryUsage.length).toBeGreaterThan(0)
+      })
+
+      it('should be non zero', () => {
+        expect(health.memoryUsage.at(0)).not.toBe('0')
       })
     })
   })
