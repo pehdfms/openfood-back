@@ -3,10 +3,12 @@ import { ConfigModule } from '@nestjs/config'
 import { LoggerModule } from 'nestjs-pino'
 import Joi from 'joi'
 import { ScheduleModule } from '@nestjs/schedule'
+import { AppController } from '@app.controller'
+import { AppService } from '@app.service'
 
 @Module({
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
   imports: [
     ScheduleModule.forRoot(),
     LoggerModule.forRoot({
