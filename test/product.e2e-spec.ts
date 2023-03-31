@@ -4,21 +4,30 @@ import request, { SuperAgentTest } from 'supertest'
 import { setupFixture } from './utils'
 import { ProductModule } from '@modules/product/product.module'
 import { PaginationResponse } from '@libs/types/pagination'
+import { getRepositoryToken, MikroOrmModule } from '@mikro-orm/nestjs'
+import { Product } from '@modules/product/entities/product.entity'
+import { mockProducts, repositoryMockFactory } from './mocks'
 
 describe('Product Module (e2e)', () => {
   let app: INestApplication
   let agent: SuperAgentTest
   let server: any
+  let repositoryMock: ReturnType<typeof repositoryMockFactory>
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [ProductModule]
-    }).compile()
+      imports: [ProductModule, MikroOrmModule.forRoot()]
+    })
+      .overrideProvider(getRepositoryToken(Product))
+      .useFactory({ factory: repositoryMockFactory })
+      .compile()
 
     app = moduleFixture.createNestApplication()
     setupFixture(app)
 
     await app.init()
+
+    repositoryMock = moduleFixture.get(getRepositoryToken(Product))
 
     server = app.getHttpServer()
     agent = request.agent(server)
