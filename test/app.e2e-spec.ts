@@ -3,7 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import request, { SuperAgentTest } from 'supertest'
 import { setupFixture } from './utils'
 import { AppModule } from 'src/app.module'
-import { HealthCheckResults } from '@app.service'
+import { HealthCheckResults } from '@app.controller'
 
 describe('App Module (e2e)', () => {
   let app: INestApplication

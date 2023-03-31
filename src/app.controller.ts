@@ -1,5 +1,12 @@
 import { Controller, Get } from '@nestjs/common'
-import { AppService, HealthCheckResults } from './app.service'
+import { AppService } from './app.service'
+
+export type HealthCheckResults = {
+  dbStatus: string
+  lastCronRun: Date
+  uptime: number
+  memoryUsage: string
+}
 
 @Controller()
 export class AppController {
@@ -7,6 +14,11 @@ export class AppController {
 
   @Get()
   async healthCheck(): Promise<HealthCheckResults> {
-    return await this.appService.healthCheck()
+    return {
+      dbStatus: await this.appService.dbStatus(),
+      lastCronRun: this.appService.lastCronRun(),
+      uptime: this.appService.uptime(),
+      memoryUsage: this.appService.memoryUsage()
+    }
   }
 }
