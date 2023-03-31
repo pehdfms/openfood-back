@@ -124,5 +124,16 @@ describe('Product Module (e2e)', () => {
     })
   })
 
-  describe('DELETE /products/:code', () => {})
+  describe('DELETE /products/:code', () => {
+    const expectedProduct = mockProducts[0]
+
+    it('should exist', async () => {
+      repositoryMock.findOne.mockReturnValue(expectedProduct)
+
+      await agent.delete(`/products/${expectedProduct.code}`).expect(HttpStatus.NO_CONTENT)
+
+      expect(repositoryMock.findOne).toHaveBeenCalledWith({ code: expectedProduct.code })
+      expect(repositoryMock.removeAndFlush).toHaveBeenCalled()
+    })
+  })
 })
