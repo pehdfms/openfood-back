@@ -1,10 +1,17 @@
 import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
+import { EntityRepository } from '@mikro-orm/core'
+import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable } from '@nestjs/common'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
+import { Product } from './entities/product.entity'
 
 @Injectable()
 export class ProductService {
+  constructor(
+    @InjectRepository(Product) private readonly productRepository: EntityRepository<Product>
+  ) {}
+
   create(createProductDto: CreateProductDto) {
     return 'This action adds a new product'
   }
