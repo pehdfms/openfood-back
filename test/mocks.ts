@@ -6,7 +6,8 @@ type MockType<T> = {
 }
 
 export const repositoryMockFactory: () => MockType<EntityRepository<Product>> = jest.fn(() => ({
-  findAndCount: jest.fn((entities: Product[]) => [entities, entities.length])
+  findAndCount: jest.fn(),
+  findOne: jest.fn()
 }))
 
 export const mockProducts = [

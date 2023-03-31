@@ -89,7 +89,22 @@ describe('Product Module (e2e)', () => {
     })
   })
 
-  describe('GET /products/:code', () => {})
+  describe('GET /products/:code', () => {
+    const expectedProduct = mockProducts[0]
+    let product: Product
+
+    it('should exist', async () => {
+      repositoryMock.findOne.mockReturnValue(expectedProduct)
+      product = (await agent.get(`/products/1`).expect(HttpStatus.OK)).body
+    })
+
+    describe('Data', () => {
+      it('should match expected data', () => {
+        expect(product).toMatchObject(expectedProduct)
+      })
+    })
+  })
+
   describe('PUT /products/:code', () => {})
   describe('DELETE /products/:code', () => {})
 })
