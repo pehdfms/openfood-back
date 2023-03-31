@@ -39,6 +39,7 @@ describe('Product Module (e2e)', () => {
   })
 
   describe('GET /products', () => {
+    const expectedProducts = mockProducts
     let products: PaginationResponse<string>
     const perPage = 5
 
@@ -51,10 +52,19 @@ describe('Product Module (e2e)', () => {
         expect(products).toHaveProperty('data')
         expect(products).toHaveProperty('page')
 
-        expect(products.page).toHaveProperty('perPage')
-        expect(products.page).toHaveProperty('totalItems')
-        expect(products.page).toHaveProperty('totalPages')
-        expect(products.page).toHaveProperty('current')
+        const { page } = products
+
+        expect(page).toHaveProperty('perPage')
+        expect(page).toHaveProperty('totalItems')
+        expect(page).toHaveProperty('totalPages')
+        expect(page).toHaveProperty('current')
+
+        if (expectedProducts.length > perPage) {
+          expect(page.totalPages).toBeGreaterThan(1)
+          expect(products.data.length).toBe(expectedProducts.slice(0, perPage).length)
+        } else {
+          expect(products.data.length).toBe(expectedProducts.length)
+        }
       })
 
       it('should match results', () => {
