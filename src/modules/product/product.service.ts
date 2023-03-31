@@ -2,7 +2,7 @@ import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
 import { getPaginationOptions } from '@libs/utils/pagination.utils'
 import { EntityRepository } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { Product } from './entities/product.entity'
@@ -26,8 +26,14 @@ export class ProductService {
     return new PaginationResponse(query, total, result)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`
+  async findOne(code: string): Promise<Product> {
+    const result = await this.productRepository.findOne({ code })
+
+    if (!result) {
+      throw new NotFoundException()
+    }
+
+    return result
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
