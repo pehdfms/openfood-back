@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { format } from 'util'
 
 export type HealthCheckResults = {
   dbStatus: string
@@ -10,8 +11,11 @@ export type HealthCheckResults = {
 @Injectable()
 export class AppService {
   healthCheck(): HealthCheckResults {
-    // TODO switch dbStatus, lastCronRun, and memoryUsage to use real data
+    // TODO switch dbStatus and lastCronRun to use real data
     const uptime = process.uptime()
-    return { dbStatus: 'ok', lastCronRun: new Date(), uptime, memoryUsage: '100MB' }
+    const memoryUsageInBytes = process.memoryUsage().heapUsed
+    const memoryUsage = format('%s MB', (memoryUsageInBytes / 1024 / 1024).toFixed(2))
+
+    return { dbStatus: 'ok', lastCronRun: new Date(), uptime, memoryUsage }
   }
 }
