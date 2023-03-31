@@ -44,6 +44,7 @@ describe('Product Module (e2e)', () => {
     const perPage = 5
 
     it('should exist', async () => {
+      repositoryMock.findAndCount.mockReturnValue([expectedProducts, expectedProducts.length])
       products = (await agent.get(`/products?perPage=${perPage}`).expect(HttpStatus.OK)).body
     })
 
