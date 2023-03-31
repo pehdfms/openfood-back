@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common'
+import { Controller, Get, Post, Body, Param, Delete, Query, Put } from '@nestjs/common'
 import { ProductService } from './product.service'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
@@ -19,18 +19,21 @@ export class ProductController {
     return await this.productService.findAll(query)
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Product> {
-    return await this.productService.findOne(id)
+  @Get(':code')
+  async findOne(@Param('code') code: string): Promise<Product> {
+    return await this.productService.findOne(code)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto)
+  @Put(':code')
+  async update(
+    @Param('code') code: string,
+    @Body() updateProductDto: UpdateProductDto
+  ): Promise<Product> {
+    return await this.productService.update(code, updateProductDto)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(+id)
+  @Delete(':code')
+  remove(@Param('code') code: string) {
+    return this.productService.remove(+code)
   }
 }
