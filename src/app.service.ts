@@ -10,7 +10,8 @@ export type HealthCheckResults = {
 @Injectable()
 export class AppService {
   healthCheck(): HealthCheckResults {
-    // TODO switch dbStatus, lastCronRun, uptime, and memoryUsage to use real data
-    return { dbStatus: 'ok', lastCronRun: new Date(), uptime: 10000, memoryUsage: '100MB' }
+    // TODO switch dbStatus, lastCronRun, and memoryUsage to use real data
+    const uptime = process.uptime()
+    return { dbStatus: 'ok', lastCronRun: new Date(), uptime, memoryUsage: '100MB' }
   }
 }
