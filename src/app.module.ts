@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { LoggerModule } from 'nestjs-pino'
 import Joi from 'joi'
 import { ScheduleModule } from '@nestjs/schedule'
@@ -10,7 +9,6 @@ import { ScheduleModule } from '@nestjs/schedule'
   providers: [],
   imports: [
     ScheduleModule.forRoot(),
-    MikroOrmModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         transport: {
