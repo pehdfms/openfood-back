@@ -1,9 +1,9 @@
 import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core'
 
 export enum ProductStatus {
-  draft = 'draft',
-  trash = 'trash',
-  published = 'published'
+  Draft = 'draft',
+  Trash = 'trash',
+  Published = 'published'
 }
 
 @Entity()
