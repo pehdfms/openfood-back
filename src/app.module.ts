@@ -5,11 +5,13 @@ import Joi from 'joi'
 import { ScheduleModule } from '@nestjs/schedule'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { TerminusModule } from '@nestjs/terminus'
 
 @Module({
   controllers: [AppController],
   providers: [AppService],
   imports: [
+    TerminusModule,
     ScheduleModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {

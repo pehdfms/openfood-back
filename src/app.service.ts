@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { HealthCheckService, MikroOrmHealthIndicator } from '@nestjs/terminus'
 import { format } from 'util'
 
 export type HealthCheckResults = {
@@ -10,12 +11,17 @@ export type HealthCheckResults = {
 
 @Injectable()
 export class AppService {
-  healthCheck(): HealthCheckResults {
-    // TODO switch dbStatus and lastCronRun to use real data
+  constructor(private health: HealthCheckService, private db: MikroOrmHealthIndicator) {}
+
+  async healthCheck(): Promise<HealthCheckResults> {
+    // TODO switch lastCronRun to use real data
+    const terminusHealth = await this.health.check([() => this.db.pingCheck('database')])
+    const dbStatus = terminusHealth.details['database'].status
+
     const uptime = process.uptime()
     const memoryUsageInBytes = process.memoryUsage().heapUsed
     const memoryUsage = format('%s MB', (memoryUsageInBytes / 1024 / 1024).toFixed(2))
 
-    return { dbStatus: 'ok', lastCronRun: new Date(), uptime, memoryUsage }
+    return { dbStatus, lastCronRun: new Date(), uptime, memoryUsage }
   }
 }

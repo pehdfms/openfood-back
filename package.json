@@ -40,6 +40,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/schedule": "^2.1.0",
     "@nestjs/swagger": "^6.1.2",
+    "@nestjs/terminus": "^9.2.2",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/cron": "^2.0.0",
