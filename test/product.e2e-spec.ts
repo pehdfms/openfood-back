@@ -31,21 +31,34 @@ describe('Product Module (e2e)', () => {
 
   describe('GET /products', () => {
     let products: PaginationResponse<string>
+    const perPage = 5
 
     it('should exist', async () => {
-      products = (await agent.get('/products').expect(HttpStatus.OK)).body
+      products = (await agent.get(`/products?perPage=${perPage}`).expect(HttpStatus.OK)).body
     })
 
-    it('should be paginated', () => {
-      expect(products).toHaveProperty('data')
-      expect(products).toHaveProperty('page')
+    describe('Pagination', () => {
+      it('should be paginated', () => {
+        expect(products).toHaveProperty('data')
+        expect(products).toHaveProperty('page')
 
-      expect(products.page).toHaveProperty('perPage')
-      expect(products.page).toHaveProperty('totalItems')
-      expect(products.page).toHaveProperty('totalPages')
-      expect(products.page).toHaveProperty('current')
+        expect(products.page).toHaveProperty('perPage')
+        expect(products.page).toHaveProperty('totalItems')
+        expect(products.page).toHaveProperty('totalPages')
+        expect(products.page).toHaveProperty('current')
+      })
+
+      it('should match results', () => {
+        const { data, page } = products
+
+        expect(page.perPage).toBe(perPage)
+        expect(page.perPage).toBeGreaterThanOrEqual(data.length)
+        expect(page.totalItems).toBeGreaterThanOrEqual(data.length)
+        expect(page.totalPages).toBeGreaterThanOrEqual(page.current)
+      })
     })
   })
+
   describe('GET /products/:code', () => {})
   describe('PUT /products/:code', () => {})
   describe('DELETE /products/:code', () => {})
