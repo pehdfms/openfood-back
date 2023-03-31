@@ -10,7 +10,7 @@ services:
       - postgres
     volumes:
       - .:/usr/src/app
-    command: yarn start:dev
+    command: yarn test:e2e
     environment:
       - DB_HOST=postgres
 
