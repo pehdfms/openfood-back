@@ -3,6 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import request, { SuperAgentTest } from 'supertest'
 import { setupFixture } from './utils'
 import { ProductModule } from '@modules/product/product.module'
+import { PaginationResponse } from '@libs/types/pagination'
 
 describe('Product Module (e2e)', () => {
   let app: INestApplication
@@ -29,7 +30,7 @@ describe('Product Module (e2e)', () => {
   })
 
   describe('GET /products', () => {
-    let products
+    let products: PaginationResponse<string>
 
     it('should exist', async () => {
       products = (await agent.get('/products').expect(HttpStatus.OK)).body
