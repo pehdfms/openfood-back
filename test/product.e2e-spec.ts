@@ -40,7 +40,7 @@ describe('Product Module (e2e)', () => {
 
   describe('GET /products', () => {
     const expectedProducts = mockProducts
-    let products: PaginationResponse<string>
+    let products: PaginationResponse<Product>
     const perPage = 5
 
     it('should exist', async () => {
