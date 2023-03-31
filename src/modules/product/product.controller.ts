@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Param, Delete, Query, Put } from '@nestjs/common'
+import { Controller, Get, Body, Param, Delete, Query, Put } from '@nestjs/common'
 import { ProductService } from './product.service'
-import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
 import { Product } from './entities/product.entity'
@@ -8,11 +7,6 @@ import { Product } from './entities/product.entity'
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
-
-  @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto)
-  }
 
   @Get()
   async findAll(@Query() query: PaginationQuery): Promise<PaginationResponse<Product>> {
