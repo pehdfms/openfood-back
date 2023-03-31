@@ -60,6 +60,14 @@ describe('App Module (e2e)', () => {
       it('should be non zero', () => {
         expect(health.uptime).toBeGreaterThan(0)
       })
+
+      it('should increase with time', async () => {
+        // Wait for 10 ms
+        await new Promise((r) => setTimeout(r, 10))
+
+        const newUptime: number = (await agent.get('').expect(HttpStatus.OK)).body.uptime
+        expect(newUptime).toBeGreaterThan(health.uptime)
+      })
     })
 
     describe('Memory Usage', () => {
