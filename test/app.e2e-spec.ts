@@ -47,6 +47,10 @@ describe('App Module (e2e)', () => {
       it('should contain uptime', async () => {
         expect(health).toHaveProperty('uptime')
       })
+
+      it('should contain memory usage', async () => {
+        expect(health).toHaveProperty('memoryUsage')
+      })
     })
   })
 })
