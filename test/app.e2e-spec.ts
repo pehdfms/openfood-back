@@ -34,5 +34,11 @@ describe('App Module (e2e)', () => {
     it('should be accessible', async () => {
       health = (await agent.get('').expect(HttpStatus.OK)).body
     })
+
+    describe('Structure', () => {
+      it('should contain DB Health', async () => {
+        expect(health).toHaveProperty('dbStatus')
+      })
+    })
   })
 })
