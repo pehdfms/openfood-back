@@ -3,6 +3,7 @@ import { ProductService } from './product.service'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
+import { Product } from './entities/product.entity'
 
 @Controller('products')
 export class ProductController {
@@ -14,8 +15,8 @@ export class ProductController {
   }
 
   @Get()
-  findAll(@Query() query: PaginationQuery): PaginationResponse<string> {
-    return this.productService.findAll(query)
+  async findAll(@Query() query: PaginationQuery): Promise<PaginationResponse<Product>> {
+    return await this.productService.findAll(query)
   }
 
   @Get(':id')

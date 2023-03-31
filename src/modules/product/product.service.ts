@@ -1,4 +1,5 @@
 import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
+import { getPaginationOptions } from '@libs/utils/pagination.utils'
 import { EntityRepository } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable } from '@nestjs/common'
@@ -16,9 +17,13 @@ export class ProductService {
     return 'This action adds a new product'
   }
 
-  findAll(query: PaginationQuery): PaginationResponse<string> {
-    const result = `This action returns all product`
-    return new PaginationResponse(query, 1, [result])
+  async findAll(query: PaginationQuery): Promise<PaginationResponse<Product>> {
+    const [result, total] = await this.productRepository.findAndCount(
+      {},
+      getPaginationOptions(query)
+    )
+
+    return new PaginationResponse(query, total, result)
   }
 
   findOne(id: number) {
