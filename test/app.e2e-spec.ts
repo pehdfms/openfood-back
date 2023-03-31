@@ -36,25 +36,25 @@ describe('App Module (e2e)', () => {
     })
 
     describe('DB Health', () => {
-      it('should be visible', async () => {
+      it('should be visible', () => {
         expect(health).toHaveProperty('dbStatus')
       })
     })
 
     describe('Last CRON Run', () => {
-      it('should be visible', async () => {
+      it('should be visible', () => {
         expect(health).toHaveProperty('lastCronRun')
       })
     })
 
     describe('Uptime', () => {
-      it('should be visible', async () => {
+      it('should be visible', () => {
         expect(health).toHaveProperty('uptime')
       })
     })
 
     describe('Memory Usage', () => {
-      it('should be visible', async () => {
+      it('should be visible', () => {
         expect(health).toHaveProperty('memoryUsage')
       })
     })
