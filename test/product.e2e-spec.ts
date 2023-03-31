@@ -30,8 +30,19 @@ describe('Product Module (e2e)', () => {
 
   describe('GET /products', () => {
     let products
+
     it('should exist', async () => {
       products = (await agent.get('/products').expect(HttpStatus.OK)).body
+    })
+
+    it('should be paginated', () => {
+      expect(products).toHaveProperty('data')
+      expect(products).toHaveProperty('page')
+
+      expect(products.page).toHaveProperty('perPage')
+      expect(products.page).toHaveProperty('totalItems')
+      expect(products.page).toHaveProperty('totalPages')
+      expect(products.page).toHaveProperty('current')
     })
   })
   describe('GET /products/:code', () => {})
