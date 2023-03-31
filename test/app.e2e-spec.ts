@@ -41,8 +41,8 @@ describe('App Module (e2e)', () => {
         expect(health).toHaveProperty('dbStatus')
       })
 
-      it('should be ok', () => {
-        expect(health.dbStatus).toBe('ok')
+      it('should be up', () => {
+        expect(health.dbStatus).toBe('up')
       })
     })
 
