@@ -39,6 +39,10 @@ describe('App Module (e2e)', () => {
       it('should contain DB Health', async () => {
         expect(health).toHaveProperty('dbStatus')
       })
+
+      it('should contain last CRON date', async () => {
+        expect(health).toHaveProperty('lastCronRun')
+      })
     })
   })
 })
