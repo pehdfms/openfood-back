@@ -3,6 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import request, { SuperAgentTest } from 'supertest'
 import { setupFixture } from './utils'
 import { AppModule } from 'src/app.module'
+import { HealthCheckResults } from '@app.service'
 
 describe('App Module (e2e)', () => {
   let app: INestApplication
@@ -29,7 +30,7 @@ describe('App Module (e2e)', () => {
   })
 
   describe('Health Check', () => {
-    let health
+    let health: HealthCheckResults
 
     it('should be accessible', async () => {
       health = (await agent.get('').expect(HttpStatus.OK)).body
