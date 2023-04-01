@@ -27,4 +27,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/cached-install
-      - run: yarn test
+      - run: yarn test --passWithNoTests

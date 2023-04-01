@@ -9,8 +9,6 @@ type JsonMapper<T> = (json: any) => T
 export class FileIOService {
   private readonly logger = new Logger(FileIOService.name)
 
-  constructor() {}
-
   fileExists(path: string): boolean {
     return existsSync(path)
   }
@@ -18,7 +16,7 @@ export class FileIOService {
   async readJsonFile<T>(
     jsonMapper: JsonMapper<T>,
     path: string,
-    startLine: number = 0,
+    startLine = 0,
     lineCount?: number
   ): Promise<T[]> {
     if (!this.fileExists(path)) {

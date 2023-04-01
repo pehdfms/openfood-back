@@ -2,7 +2,7 @@ import { EntityRepository } from '@mikro-orm/core'
 import { Product, ProductStatus } from '@modules/product/entities/product.entity'
 
 type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>
+  [P in keyof T]?: jest.Mock<Record<string, any>>
 }
 
 export const repositoryMockFactory: () => MockType<EntityRepository<Product>> = jest.fn(() => ({

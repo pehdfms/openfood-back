@@ -1,4 +1,4 @@
-import { EntityRepository, MikroORM, UseRequestContext, wrap } from '@mikro-orm/core'
+import { EntityRepository, MikroORM, UseRequestContext } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable, Logger } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
@@ -84,7 +84,7 @@ export class ProductFetcherService {
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   @UseRequestContext()
-  async fetch(expectedDownloadCount: number = 100): Promise<number> {
+  async fetch(expectedDownloadCount = 100): Promise<number> {
     this.logger.log('Synchronizing with product list...')
 
     let downloadCount = 0

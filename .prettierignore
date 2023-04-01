@@ -1,2 +1,5 @@
 /dist
 /coverage
+/test/jest.config.js
+/src/migrations/.snapshot-kitaku.json
+README.md
