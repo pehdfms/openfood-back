@@ -24,7 +24,7 @@ export class ProductFetcherService {
   ) {}
 
   objectProductMapper(obj: any): Product {
-    // TODO there's probably a better way to do this
+    // TODO I don't want to import lodash just to simplify this
     const product: Product = {
       code: obj.code,
       status: ProductStatus.Draft,
