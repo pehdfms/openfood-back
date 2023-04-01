@@ -1,9 +1,10 @@
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import { IsOptional, IsUrl, MaxLength } from 'class-validator'
+import { IsEnum, IsOptional, IsUrl, MaxLength } from 'class-validator'
 import { ProductStatus } from '../entities/product.entity'
 
 export class UpdateProductDto {
   @ApiPropertyOptional({ example: 'draft' })
+  @IsEnum()
   @IsOptional()
   status?: ProductStatus
 
