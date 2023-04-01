@@ -8,6 +8,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { TerminusModule } from '@nestjs/terminus'
 import { ProductModule } from '@modules/product/product.module'
+import { SyncModule } from '@modules/sync/sync.module'
 
 @Module({
   controllers: [AppController],
@@ -17,6 +18,7 @@ import { ProductModule } from '@modules/product/product.module'
     ScheduleModule.forRoot(),
     MikroOrmModule.forRoot(),
     ProductModule,
+    SyncModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport: {

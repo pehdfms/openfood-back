@@ -44,5 +44,5 @@ async function setupSwagger(app: INestApplication) {
   const config = new DocumentBuilder().setTitle('openfood').setVersion('0.1').build()
 
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api/docs', app, document, { swaggerOptions: { withCredentials: true } })
+  SwaggerModule.setup('docs', app, document, { swaggerOptions: { withCredentials: true } })
 }
