@@ -23,7 +23,7 @@ export class Product {
   @Property()
   imported_t: Date = new Date()
 
-  @Property()
+  @Property({ length: 1024 })
   url: string
 
   @Property()
@@ -38,7 +38,7 @@ export class Product {
   @Property()
   brands: string
 
-  @Property()
+  @Property({ length: 1024 })
   categories: string
 
   @Property()
@@ -47,26 +47,30 @@ export class Product {
   @Property()
   cities: string
 
-  @Property()
+  @Property({ length: 8192 })
   purchase_places: string
 
   @Property()
   stores: string
 
-  @Property()
+  @Property({ length: 8192 })
   ingredients_text: string
 
-  @Property()
+  @Property({ length: 2048 })
   traces: string
 
   @Property()
   serving_size: string
 
+  // These following two properties are supposed to be numbers, but
+  // are very often empty in the input
+  // I could maybe justify serving_quantity defaulting to zero, but I
+  // can't say the same for nutriscore_score
   @Property()
-  serving_quantity: number
+  serving_quantity: string
 
   @Property()
-  nutriscore_score: number
+  nutriscore_score: string
 
   @Property()
   nutriscore_grade: string

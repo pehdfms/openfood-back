@@ -6,6 +6,61 @@
   "tables": [
     {
       "columns": {
+        "filename": {
+          "name": "filename",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "cursor": {
+          "name": "cursor",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "done": {
+          "name": "done",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "boolean"
+        },
+        "downloaded": {
+          "name": "downloaded",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "boolean"
+        }
+      },
+      "name": "fetch_status",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "fetch_status_pkey",
+          "columnNames": [
+            "filename"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
         "code": {
           "name": "code",
           "type": "varchar(255)",
@@ -59,164 +114,182 @@
         },
         "url": {
           "name": "url",
-          "type": "varchar(255)",
+          "type": "varchar(1024)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 1024,
           "mappedType": "string"
         },
         "creator": {
           "name": "creator",
-          "type": "varchar(255)",
+          "type": "varchar(254)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 254,
           "mappedType": "string"
         },
         "product_name": {
           "name": "product_name",
-          "type": "varchar(255)",
+          "type": "varchar(256)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 256,
           "mappedType": "string"
         },
         "quantity": {
           "name": "quantity",
-          "type": "varchar(255)",
+          "type": "varchar(257)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 257,
           "mappedType": "string"
         },
         "brands": {
           "name": "brands",
-          "type": "varchar(255)",
+          "type": "varchar(258)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 258,
           "mappedType": "string"
         },
         "categories": {
           "name": "categories",
-          "type": "varchar(255)",
+          "type": "varchar(1024)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 1024,
           "mappedType": "string"
         },
         "labels": {
           "name": "labels",
-          "type": "varchar(255)",
+          "type": "varchar(259)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 259,
           "mappedType": "string"
         },
         "cities": {
           "name": "cities",
-          "type": "varchar(255)",
+          "type": "varchar(260)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 260,
           "mappedType": "string"
         },
         "purchase_places": {
           "name": "purchase_places",
-          "type": "varchar(255)",
+          "type": "varchar(8192)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 8192,
           "mappedType": "string"
         },
         "stores": {
           "name": "stores",
-          "type": "varchar(255)",
+          "type": "varchar(261)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 261,
           "mappedType": "string"
         },
         "ingredients_text": {
           "name": "ingredients_text",
-          "type": "varchar(255)",
+          "type": "varchar(8192)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 8192,
           "mappedType": "string"
         },
         "traces": {
           "name": "traces",
-          "type": "varchar(255)",
+          "type": "varchar(2048)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 2048,
           "mappedType": "string"
         },
         "serving_size": {
           "name": "serving_size",
-          "type": "varchar(255)",
+          "type": "varchar(263)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 263,
           "mappedType": "string"
         },
         "serving_quantity": {
           "name": "serving_quantity",
-          "type": "int",
+          "type": "varchar(264)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "integer"
+          "length": 264,
+          "mappedType": "string"
         },
         "nutriscore_score": {
           "name": "nutriscore_score",
-          "type": "int",
+          "type": "varchar(265)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "integer"
+          "length": 265,
+          "mappedType": "string"
         },
         "nutriscore_grade": {
           "name": "nutriscore_grade",
-          "type": "varchar(255)",
+          "type": "varchar(266)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 266,
           "mappedType": "string"
         },
         "main_category": {
           "name": "main_category",
-          "type": "varchar(255)",
+          "type": "varchar(267)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 267,
           "mappedType": "string"
         },
         "image_url": {
           "name": "image_url",
-          "type": "varchar(255)",
+          "type": "varchar(268)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 268,
           "mappedType": "string"
         }
       },
