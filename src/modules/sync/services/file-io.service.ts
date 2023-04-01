@@ -38,7 +38,6 @@ export class FileIOService {
         try {
           const json = JSON.parse(line)
 
-          this.logger.log('mapping object...')
           const mappedObject = jsonMapper(json)
 
           objects.push(mappedObject)

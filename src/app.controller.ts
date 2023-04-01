@@ -1,9 +1,10 @@
+import { FetchHistory } from '@modules/sync/entities/fetch-history.entity'
 import { Controller, Get } from '@nestjs/common'
 import { AppService } from './app.service'
 
 export type HealthCheckResults = {
   dbStatus: string
-  lastCronRun: Date
+  lastCronRun?: FetchHistory
   uptime: number
   memoryUsage: string
 }
@@ -16,7 +17,7 @@ export class AppController {
   async healthCheck(): Promise<HealthCheckResults> {
     return {
       dbStatus: await this.appService.dbStatus(),
-      lastCronRun: this.appService.lastCronRun(),
+      lastCronRun: await this.appService.lastCronRun(),
       uptime: this.appService.uptime(),
       memoryUsage: this.appService.memoryUsage()
     }

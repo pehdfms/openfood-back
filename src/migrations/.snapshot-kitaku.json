@@ -6,6 +6,53 @@
   "tables": [
     {
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "run_t": {
+          "name": "run_t",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "fetch_count": {
+          "name": "fetch_count",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        }
+      },
+      "name": "fetch_history",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "fetch_history_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {}
+    },
+    {
+      "columns": {
         "filename": {
           "name": "filename",
           "type": "varchar(255)",
@@ -151,11 +198,12 @@
         },
         "brands": {
           "name": "brands",
-          "type": "varchar(255)",
+          "type": "varchar(2048)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 2048,
           "mappedType": "string"
         },
         "categories": {
@@ -170,20 +218,22 @@
         },
         "labels": {
           "name": "labels",
-          "type": "varchar(255)",
+          "type": "varchar(2048)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 2048,
           "mappedType": "string"
         },
         "cities": {
           "name": "cities",
-          "type": "varchar(255)",
+          "type": "varchar(4096)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 4096,
           "mappedType": "string"
         },
         "purchase_places": {
@@ -198,11 +248,12 @@
         },
         "stores": {
           "name": "stores",
-          "type": "varchar(255)",
+          "type": "varchar(4096)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 4096,
           "mappedType": "string"
         },
         "ingredients_text": {
@@ -272,11 +323,12 @@
         },
         "image_url": {
           "name": "image_url",
-          "type": "varchar(255)",
+          "type": "varchar(512)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 512,
           "mappedType": "string"
         }
       },

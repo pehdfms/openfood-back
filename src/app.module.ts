@@ -9,6 +9,7 @@ import { AppService } from './app.service'
 import { TerminusModule } from '@nestjs/terminus'
 import { ProductModule } from '@modules/product/product.module'
 import { SyncModule } from '@modules/sync/sync.module'
+import { FetchHistory } from '@modules/sync/entities/fetch-history.entity'
 
 @Module({
   controllers: [AppController],
@@ -17,6 +18,7 @@ import { SyncModule } from '@modules/sync/sync.module'
     TerminusModule,
     ScheduleModule.forRoot(),
     MikroOrmModule.forRoot(),
+    MikroOrmModule.forFeature([FetchHistory]),
     ProductModule,
     SyncModule,
     LoggerModule.forRoot({

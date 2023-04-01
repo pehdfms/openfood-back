@@ -8,6 +8,7 @@ import { Product, ProductStatus } from '@modules/product/entities/product.entity
 import { FetchStatus } from '../entities/fetch-status.entity'
 import { DataDownloader } from './data-downloader.service'
 import { FileIOService } from './file-io.service'
+import { FetchHistory } from '../entities/fetch-history.entity'
 
 @Injectable()
 export class ProductFetcherService {
@@ -15,6 +16,8 @@ export class ProductFetcherService {
 
   constructor(
     @InjectRepository(Product) private readonly productRepository: EntityRepository<Product>,
+    @InjectRepository(FetchHistory)
+    private readonly fetchHistoryRepository: EntityRepository<FetchHistory>,
     private readonly dataDownloader: DataDownloader,
     private readonly fileIOService: FileIOService,
     private readonly orm: MikroORM
@@ -52,6 +55,7 @@ export class ProductFetcherService {
   }
 
   async saveProducts(fromFile: FetchStatus, count: number): Promise<number> {
+    // TODO download to another folder
     const filePath = path.join(__dirname, fromFile.filename)
     const isDownloaded = fromFile.downloaded && existsSync(filePath)
 
@@ -104,6 +108,10 @@ export class ProductFetcherService {
     }
 
     this.logger.log(`Finished synchronization, downloaded ${downloadCount} products`)
+
+    const historyEntry = this.fetchHistoryRepository.create({ fetch_count: downloadCount })
+    await this.fetchHistoryRepository.persistAndFlush(historyEntry)
+
     return downloadCount
   }
 }

@@ -1,19 +1,33 @@
+import { EntityRepository } from '@mikro-orm/core'
+import { InjectRepository } from '@mikro-orm/nestjs'
+import { FetchHistory } from '@modules/sync/entities/fetch-history.entity'
 import { Injectable } from '@nestjs/common'
 import { HealthCheckService, MikroOrmHealthIndicator } from '@nestjs/terminus'
 import { format } from 'util'
 
 @Injectable()
 export class AppService {
-  constructor(private health: HealthCheckService, private db: MikroOrmHealthIndicator) {}
+  constructor(
+    private readonly health: HealthCheckService,
+    private readonly db: MikroOrmHealthIndicator,
+    @InjectRepository(FetchHistory)
+    private readonly fetchHistoryRepository: EntityRepository<FetchHistory>
+  ) {}
 
   async dbStatus(): Promise<string> {
     const terminusHealth = await this.health.check([() => this.db.pingCheck('database')])
     return terminusHealth.details['database'].status
   }
 
-  lastCronRun(): Date {
-    // TODO switch lastCronRun to use real data
-    return new Date()
+  async lastCronRun(): Promise<FetchHistory> {
+    const lastCronRun = (
+      await this.fetchHistoryRepository.findAll({
+        orderBy: { run_t: 'desc' },
+        limit: 1
+      })
+    )[0]
+
+    return lastCronRun || null
   }
 
   uptime(): number {

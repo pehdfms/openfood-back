@@ -35,22 +35,22 @@ export class Product {
   @Property()
   quantity: string
 
-  @Property()
+  @Property({ length: 2048 })
   brands: string
 
   @Property({ length: 1024 })
   categories: string
 
-  @Property()
+  @Property({ length: 2048 })
   labels: string
 
-  @Property()
+  @Property({ length: 4096 })
   cities: string
 
   @Property({ length: 8192 })
   purchase_places: string
 
-  @Property()
+  @Property({ length: 4096 })
   stores: string
 
   @Property({ length: 8192 })
@@ -78,6 +78,6 @@ export class Product {
   @Property()
   main_category: string
 
-  @Property()
+  @Property({ length: 512 })
   image_url: string
 }
