@@ -1,5 +1,5 @@
 import { Controller, Post, Query } from '@nestjs/common'
-import { ApiPropertyOptional } from '@nestjs/swagger'
+import { ApiPropertyOptional, ApiTags } from '@nestjs/swagger'
 import { IsNumber, IsOptional, Min } from 'class-validator'
 import { ProductFetcherService } from './services/product-fetcher.service'
 
@@ -12,6 +12,7 @@ class SyncQueryParams {
 }
 
 @Controller('sync')
+@ApiTags('Sync')
 export class SyncController {
   constructor(private readonly productFetcherService: ProductFetcherService) {}
 

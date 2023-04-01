@@ -13,8 +13,10 @@ import { ProductService } from './product.service'
 import { UpdateProductDto } from './dto/update-product.dto'
 import { PaginationQuery, PaginationResponse } from '@libs/types/pagination'
 import { Product } from './entities/product.entity'
+import { ApiTags } from '@nestjs/swagger'
 
 @Controller('products')
+@ApiTags('Products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
