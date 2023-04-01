@@ -1,10 +1,10 @@
-* Projeto Desafio Openfood em NestJS
+# Projeto Desafio Openfood em NestJS
 
-** Instalacao
+## Instalacao
 
 Após clonar o repositório e instalar o Docker, basta executar os comandos `docker compose up` e `npx mikro-orm migration:up` na pasta principal do projeto.
 
-** Migrations
+## Migrations
 
 Para criar a primeira migração:
 ```
@@ -22,12 +22,12 @@ npx mikro-orm migration:up
 ```
 
 
-** Devlog
-*** Setup Inicial
+## Devlog
+### Setup Inicial
 
 Para criar a estrutura do projeto, foi utilizado um projeto pessoal com uma estrutura similar, no qual os módulos foram removidos e novos foram regenerados. Essa estrutura inclui uma variedade de bibliotecas úteis para o desenvolvimento, como MikroORM, Pino para logging/tracing, Joi para validação de arquivos de configuração, Class Validator/Transformer, Cron, entre outros.
 
-*** Desenvolvimento
+### Desenvolvimento
 
 Começou-se com a criação dos health checks (endpoint GET /) seguindo a metodologia TDD (Red, Green, Refactor), utilizando a biblioteca Terminus do NestJS para verificar o status do banco e futuramente acessar outros provedores com mais facilidade.
 
