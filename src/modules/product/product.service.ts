@@ -4,7 +4,7 @@ import { EntityRepository } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { UpdateProductDto } from './dto/update-product.dto'
-import { Product } from './entities/product.entity'
+import { Product, ProductStatus } from './entities/product.entity'
 
 @Injectable()
 export class ProductService {
@@ -14,7 +14,11 @@ export class ProductService {
 
   async findAll(query: PaginationQuery): Promise<PaginationResponse<Product>> {
     const [result, total] = await this.productRepository.findAndCount(
-      {},
+      {
+        status: {
+          $ne: ProductStatus.Trash
+        }
+      },
       getPaginationOptions(query)
     )
 
@@ -40,7 +44,6 @@ export class ProductService {
   }
 
   async remove(code: string): Promise<void> {
-    const board = await this.findOne(code)
-    await this.productRepository.removeAndFlush(board)
+    await this.update(code, { status: ProductStatus.Trash })
   }
 }
