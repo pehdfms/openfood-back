@@ -38,8 +38,17 @@ describe('Product Module (e2e)', () => {
     server.close()
   })
 
+  const expectedProduct = mockProducts[0]
+  const expectedProductDto = {
+    ...expectedProduct,
+    imported_t: expectedProduct.imported_t.toISOString()
+  }
+
   describe('GET /products', () => {
-    const expectedProducts = mockProducts
+    const expectedProducts = mockProducts.map((product) => ({
+      ...product,
+      imported_t: product.imported_t.toISOString()
+    }))
     let products: PaginationResponse<Product>
     const perPage = 5
 
@@ -90,7 +99,6 @@ describe('Product Module (e2e)', () => {
   })
 
   describe('GET /products/:code', () => {
-    const expectedProduct = mockProducts[0]
     let product: Product
 
     it('should exist', async () => {
@@ -100,18 +108,17 @@ describe('Product Module (e2e)', () => {
 
     describe('Data', () => {
       it('should match expected data', () => {
-        expect(product).toMatchObject(expectedProduct)
+        expect(product).toMatchObject(expectedProductDto)
       })
     })
   })
 
   describe('PUT /products/:code', () => {
-    const expectedProduct = mockProducts[0]
     let product: Product
 
     it('should exist', async () => {
       repositoryMock.findOne.mockReturnValue(expectedProduct)
-      repositoryMock.persistAndFlush.mockReturnValue(expectedProduct)
+      repositoryMock.persistAndFlush.mockReturnValue(expectedProductDto)
 
       product = (await agent.put(`/products/${expectedProduct.code}`).expect(HttpStatus.OK)).body
       expect(repositoryMock.findOne).toHaveBeenCalledWith({ code: expectedProduct.code })
@@ -119,14 +126,12 @@ describe('Product Module (e2e)', () => {
 
     describe('Data', () => {
       it('should match expected data', () => {
-        expect(product).toMatchObject(expectedProduct)
+        expect(product).toMatchObject(expectedProductDto)
       })
     })
   })
 
   describe('DELETE /products/:code', () => {
-    const expectedProduct = mockProducts[0]
-
     it('should exist', async () => {
       repositoryMock.findOne.mockReturnValue(expectedProduct)
 

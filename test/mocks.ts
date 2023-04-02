@@ -1,22 +1,22 @@
 import { EntityRepository } from '@mikro-orm/core'
 import { Product, ProductStatus } from '@modules/product/entities/product.entity'
 
-type MockType<T> = {
-  [P in keyof T]?: jest.Mock<Record<string, any>>
+export type Mock<T> = {
+  [P in keyof T]?: jest.Mock
 }
 
-export const repositoryMockFactory: () => MockType<EntityRepository<Product>> = jest.fn(() => ({
+export const repositoryMockFactory: () => Mock<EntityRepository<Product>> = jest.fn(() => ({
   assign: jest.fn(),
   findAndCount: jest.fn(),
   findOne: jest.fn(),
   persistAndFlush: jest.fn()
 }))
 
-export const mockProducts = [
+export const mockProducts: Product[] = [
   {
     code: '20221126',
     status: ProductStatus.Published,
-    imported_t: `${new Date()}`,
+    imported_t: new Date(),
     url: 'https://world.openfoodfacts.org/product/20221126',
     creator: 'securita',
     created_t: 1415302075,
@@ -34,8 +34,8 @@ export const mockProducts = [
     traces:
       'Frutos de casca rija,Leite,Soja,Sementes de sésamo,Produtos à base de sementes de sésamo',
     serving_size: 'madalena 31.7 g',
-    serving_quantity: 31.7,
-    nutriscore_score: 17,
+    serving_quantity: '31.7',
+    nutriscore_score: '17',
     nutriscore_grade: 'd',
     main_category: 'en:madeleines',
     image_url: 'https://static.openfoodfacts.org/images/products/20221126/front_pt.5.400.jpg'
