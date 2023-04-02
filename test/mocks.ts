@@ -9,8 +9,7 @@ export const repositoryMockFactory: () => MockType<EntityRepository<Product>> = 
   assign: jest.fn(),
   findAndCount: jest.fn(),
   findOne: jest.fn(),
-  persistAndFlush: jest.fn(),
-  removeAndFlush: jest.fn()
+  persistAndFlush: jest.fn()
 }))
 
 export const mockProducts = [
