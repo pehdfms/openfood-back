@@ -7,8 +7,9 @@ import path from 'path'
 import { Product, ProductStatus } from '@modules/product/entities/product.entity'
 import { FetchStatus } from '../entities/fetch-status.entity'
 import { DataDownloader } from './data-downloader.service'
-import { FileIOService } from './file-io.service'
+import { FileIOService, UnknownObject } from './file-io.service'
 import { FetchHistory } from '../entities/fetch-history.entity'
+import { plainToInstance } from 'class-transformer'
 
 @Injectable()
 export class ProductFetcherService {
@@ -23,34 +24,19 @@ export class ProductFetcherService {
     private readonly orm: MikroORM
   ) {}
 
-  objectProductMapper(obj: any): Product {
-    // TODO I don't want to import lodash just to simplify this
-    const product: Product = {
-      code: obj.code,
-      status: ProductStatus.Draft,
-      created_t: parseInt(obj.created_t, 10),
-      last_modified_t: parseInt(obj.last_modified_t, 10),
-      imported_t: new Date(),
-      url: obj.url,
-      creator: obj.creator,
-      product_name: obj.product_name,
-      quantity: obj.quantity,
-      brands: obj.brands,
-      categories: obj.categories,
-      labels: obj.labels,
-      cities: obj.cities,
-      purchase_places: obj.purchase_places,
-      stores: obj.stores,
-      ingredients_text: obj.ingredients_text,
-      traces: obj.traces,
-      serving_size: obj.serving_size,
-      serving_quantity: obj.serving_quantity,
-      nutriscore_score: obj.nutriscore_score,
-      nutriscore_grade: obj.nutriscore_grade,
-      main_category: obj.main_category,
-      image_url: obj.image_url
+  objectProductMapper(obj: UnknownObject): Product | null {
+    if (typeof obj.created_t !== 'string' || typeof obj.last_modified_t !== 'string') {
+      return null
     }
 
+    obj.status = ProductStatus.Draft
+    obj.created_t = parseInt(obj.created_t, 10)
+    obj.last_modified_t = parseInt(obj.last_modified_t, 10)
+    obj.imported_t = new Date()
+
+    // FIXME plainToInstance doesn't fail if obj isn't a valid Product
+    // this will fail anyways when saving to the database, but it's still not great
+    const product = plainToInstance(Product, obj, { excludeExtraneousValues: true })
     return product
   }
 
