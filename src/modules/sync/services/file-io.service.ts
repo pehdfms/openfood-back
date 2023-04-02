@@ -29,29 +29,37 @@ export class FileIOService {
       crlfDelay: Infinity
     })
 
+    const lineCounter = (
+      (i = 0) =>
+      () =>
+        i++
+    )()
+
     const objects = []
-    let lineNumber = 0
     for await (const line of rl) {
-      if (lineNumber >= startLine) {
-        try {
-          const json = JSON.parse(line)
+      const lineNumber = lineCounter()
 
-          const mappedObject = jsonMapper(json)
-
-          if (mappedObject) {
-            objects.push(mappedObject)
-          }
-
-          if (objects.length === lineCount) {
-            rl.close()
-            fileStream.close()
-            return objects
-          }
-        } catch (err) {
-          this.logger.error(`Error parsing line ${lineNumber} of ${path}: ${err}`)
-        }
+      if (lineNumber < startLine) {
+        continue
       }
-      lineNumber++
+
+      try {
+        const json = JSON.parse(line)
+
+        const mappedObject = jsonMapper(json)
+
+        if (mappedObject) {
+          objects.push(mappedObject)
+        }
+
+        if (objects.length >= lineCount) {
+          rl.close()
+          fileStream.close()
+          return objects
+        }
+      } catch (err) {
+        this.logger.error(`Error parsing line ${lineNumber} of ${path}: ${err}`)
+      }
     }
 
     return objects
