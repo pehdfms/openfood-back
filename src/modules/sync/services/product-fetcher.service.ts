@@ -2,7 +2,6 @@ import { EntityRepository, MikroORM, UseRequestContext } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable, Logger } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { existsSync } from 'fs'
 import path from 'path'
 import { Product, ProductStatus } from '@modules/product/entities/product.entity'
 import { FetchStatus } from '../entities/fetch-status.entity'
@@ -43,7 +42,7 @@ export class ProductFetcherService {
   async saveProducts(fromFile: FetchStatus, count: number): Promise<number> {
     // TODO download to another folder
     const filePath = path.join(__dirname, fromFile.filename)
-    const isDownloaded = fromFile.downloaded && existsSync(filePath)
+    const isDownloaded = fromFile.downloaded && this.fileIOService.fileExists(filePath)
 
     if (!isDownloaded) {
       await this.dataDownloader.downloadGz(
