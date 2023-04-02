@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common'
 import { createReadStream, existsSync, writeFileSync } from 'fs'
 import readline from 'readline'
 
-// TODO improve json arg type
-type JsonMapper<T> = (json: any) => T
+export type UnknownObject = Record<string, unknown>
+type JsonMapper<T> = (json: UnknownObject) => T | null
 
 @Injectable()
 export class FileIOService {
@@ -38,7 +38,9 @@ export class FileIOService {
 
           const mappedObject = jsonMapper(json)
 
-          objects.push(mappedObject)
+          if (mappedObject) {
+            objects.push(mappedObject)
+          }
 
           if (objects.length === lineCount) {
             rl.close()
