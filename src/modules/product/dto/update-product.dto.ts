@@ -4,7 +4,7 @@ import { ProductStatus } from '../entities/product.entity'
 
 export class UpdateProductDto {
   @ApiPropertyOptional({ example: 'draft' })
-  @IsEnum()
+  @IsEnum(ProductStatus)
   @IsOptional()
   status?: ProductStatus
 
