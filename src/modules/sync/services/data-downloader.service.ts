@@ -21,7 +21,7 @@ export class DataDownloader {
     this.logger.verbose(`Indexing ${url}`)
 
     const response = await this.httpService.get<string>(url).toPromise()
-    let files = response.data.split('\n').filter((filename) => filename !== '')
+    let files = response.data.split('\n').filter((filename) => filename.trim() !== '')
 
     if (ignore) {
       files = files.filter((filename) => !ignore.some((ignoredFile) => ignoredFile === filename))
@@ -30,16 +30,14 @@ export class DataDownloader {
     this.logger.verbose(`Found ${files.length} files while indexing ${url}`)
     this.logger.verbose(`Persisting indexing information to database`)
 
-    files.forEach(async (filename) => {
-      const newFile = this.fetchStatusRepository.create({
-        filename,
-        cursor: 0,
-        done: false,
-        downloaded: false
-      })
+    const unindexedFiles: FetchStatus[] = files.map((filename) => ({
+      filename,
+      cursor: 0,
+      done: false,
+      downloaded: false
+    }))
 
-      await this.fetchStatusRepository.persistAndFlush(newFile)
-    })
+    await this.fetchStatusRepository.persistAndFlush(unindexedFiles)
 
     return await this.fetchStatusRepository.findAll({
       having: { done: false },
