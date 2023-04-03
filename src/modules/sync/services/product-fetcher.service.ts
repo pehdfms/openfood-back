@@ -69,14 +69,12 @@ export class ProductFetcherService {
     return products.length
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
-  @UseRequestContext()
-  async fetch(expectedDownloadCount = 100): Promise<number> {
+  async fetch(expectedDownloadCount: number): Promise<number> {
     this.logger.log('Synchronizing with product list...')
 
     let downloadCount = 0
 
-    while (downloadCount !== expectedDownloadCount) {
+    while (downloadCount < expectedDownloadCount) {
       const fileToDownload = await this.dataDownloader.nextToDownload(
         'https://challenges.coode.sh/food/data/json/index.txt'
       )
@@ -100,5 +98,11 @@ export class ProductFetcherService {
     await this.fetchHistoryRepository.persistAndFlush(historyEntry)
 
     return downloadCount
+  }
+
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  @UseRequestContext()
+  async sync() {
+    await this.fetch(100)
   }
 }
