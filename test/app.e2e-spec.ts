@@ -10,7 +10,7 @@ describe('App Module (e2e)', () => {
   let agent: SuperAgentTest
   let server: any
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule]
     }).compile()
@@ -24,7 +24,7 @@ describe('App Module (e2e)', () => {
     agent = request.agent(server)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     await app.close()
     server.close()
   })

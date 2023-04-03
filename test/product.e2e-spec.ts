@@ -14,7 +14,7 @@ describe('Product Module (e2e)', () => {
   let server: any
   let repositoryMock: ReturnType<typeof repositoryMockFactory>
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [ProductModule, MikroOrmModule.forRoot()]
     })
@@ -33,7 +33,7 @@ describe('Product Module (e2e)', () => {
     agent = request.agent(server)
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     await app.close()
     server.close()
   })

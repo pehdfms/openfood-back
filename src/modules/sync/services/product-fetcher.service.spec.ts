@@ -18,7 +18,7 @@ describe('ProductFetcherService', () => {
   let dataDownloader: Mock<DataDownloader>
   let fileIOService: Mock<FileIOService>
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ProductFetcherService,
@@ -42,6 +42,10 @@ describe('ProductFetcherService', () => {
     fetchHistoryRepository = module.get(getRepositoryToken(FetchHistory))
     dataDownloader = module.get(DataDownloader)
     fileIOService = module.get(FileIOService)
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks()
   })
 
   describe('saveProducts', () => {
