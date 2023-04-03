@@ -8,14 +8,14 @@ export class PaginationQuery {
   @IsOptional()
   @IsNumber()
   @Min(0)
-  page = 0
+  page: number = 0
 
   @ApiPropertyOptional({ default: 20 })
   @Type(() => Number)
   @IsOptional()
   @IsNumber()
   @Min(1)
-  perPage = 20
+  perPage: number = 20
 }
 
 export class PaginationResponse<T> {

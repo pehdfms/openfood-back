@@ -53,7 +53,6 @@ const exampleProduct: Product = {
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get()
   @ApiOperation({
     description: 'Returns all products with pagination set by query',
     summary: 'Find All Products'
@@ -72,6 +71,7 @@ export class ProductController {
       }
     }
   })
+  @Get()
   async findAll(@Query() query: PaginationQuery): Promise<PaginationResponse<Product>> {
     return await this.productService.findAll(query)
   }
