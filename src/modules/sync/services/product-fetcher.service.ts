@@ -23,23 +23,11 @@ export class ProductFetcherService {
     private readonly orm: MikroORM
   ) {}
 
-  objectProductMapper(obj: UnknownObject): Product | null {
-    if (typeof obj.created_t !== 'string' || typeof obj.last_modified_t !== 'string') {
-      return null
+  async saveProducts(fromFile: FetchStatus, count: number): Promise<number> {
+    if (fromFile.done) {
+      return 0
     }
 
-    obj.status = ProductStatus.Draft
-    obj.created_t = parseInt(obj.created_t, 10)
-    obj.last_modified_t = parseInt(obj.last_modified_t, 10)
-    obj.imported_t = new Date()
-
-    // FIXME plainToInstance doesn't fail if obj isn't a valid Product
-    // this will fail anyways when saving to the database, but it's still not great
-    const product = plainToInstance(Product, obj, { excludeExtraneousValues: true })
-    return product
-  }
-
-  async saveProducts(fromFile: FetchStatus, count: number): Promise<number> {
     // TODO download to another folder
     const filePath = path.join(__dirname, fromFile.filename)
     const isDownloaded = fromFile.downloaded && this.fileIOService.fileExists(filePath)
@@ -54,7 +42,21 @@ export class ProductFetcherService {
 
     const products = (
       await this.fileIOService.readJsonFile(
-        this.objectProductMapper,
+        (obj) => {
+          if (typeof obj.created_t !== 'string' || typeof obj.last_modified_t !== 'string') {
+            return null
+          }
+
+          obj.status = ProductStatus.Draft
+          obj.created_t = parseInt(obj.created_t, 10)
+          obj.last_modified_t = parseInt(obj.last_modified_t, 10)
+          obj.imported_t = new Date()
+
+          // FIXME plainToInstance doesn't fail if obj isn't a valid Product
+          // this will fail anyways when saving to the database, but it's still not great
+          const product = plainToInstance(Product, obj, { excludeExtraneousValues: true })
+          return product
+        },
         filePath,
         fromFile.cursor,
         count
