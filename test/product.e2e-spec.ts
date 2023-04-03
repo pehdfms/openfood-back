@@ -6,7 +6,7 @@ import { ProductModule } from '@modules/product/product.module'
 import { PaginationResponse } from '@libs/types/pagination'
 import { getRepositoryToken, MikroOrmModule } from '@mikro-orm/nestjs'
 import { Product } from '@modules/product/entities/product.entity'
-import { mockProducts, repositoryMockFactory } from './mocks'
+import { generateMockProducts, repositoryMockFactory } from './mocks'
 
 describe('Product Module (e2e)', () => {
   let app: INestApplication
@@ -38,6 +38,7 @@ describe('Product Module (e2e)', () => {
     server.close()
   })
 
+  const mockProducts = generateMockProducts(100)
   const expectedProduct = mockProducts[0]
   const expectedProductDto = {
     ...expectedProduct,
