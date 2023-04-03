@@ -54,7 +54,16 @@ describe('Product Module (e2e)', () => {
     const perPage = 5
 
     it('should exist', async () => {
-      repositoryMock.findAndCount.mockReturnValue([expectedProducts, expectedProducts.length])
+      repositoryMock.findAndCount.mockImplementation(
+        (_: any, pagination: { limit: number; offset: number }) => {
+          const data = expectedProducts.slice(
+            pagination.offset,
+            pagination.offset + pagination.limit
+          )
+
+          return [data, expectedProducts.length]
+        }
+      )
       products = (await agent.get(`/products?perPage=${perPage}`).expect(HttpStatus.OK)).body
     })
 
