@@ -2,7 +2,19 @@
 
 ## Instalacao
 
-Após clonar o repositório e instalar o Docker, basta executar os comandos `docker compose up` e `npx mikro-orm migration:up` na pasta principal do projeto.
+Após clonar o repositório e instalar o Docker, basta executar os comandos `docker compose up` e `npx mikro-orm migration:up` na pasta principal do projeto depois de configurar o arquivo .env na pasta principal.
+
+## .env (exemplo)
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=openfood
+PORT=8000
+HOST=0.0.0.0
+MODE=dev
+```
 
 ## Migrations
 
